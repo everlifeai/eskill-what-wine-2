@@ -15,7 +15,7 @@ function main() {
 }
 
 const commMgrClient = new cote.Requester({
-    name: 'What-Wine -> CommMgr',
+    name: 'What-Wine-2 -> CommMgr',
     key: 'everlife-communication-svc',
 })
 
@@ -27,7 +27,7 @@ function sendReply(msg, req) {
     })
 }
 
-let msKey = 'everlife-what-wine-demo-svc'
+let msKey = 'everlife-what-wine-demo-svc-2'
 /*      outcome/
  * Register ourselves as a message handler with the communication
  * manager so we can handle requests for wine recommendations.
@@ -37,7 +37,7 @@ function registerWithCommMgr() {
         type: 'register-msg-handler',
         mskey: msKey,
         mstype: 'msg',
-        mshelp: [ { cmd: '/what_wine', txt: 'give me a wine recommendation' } ],
+        mshelp: [ { cmd: '/what_wine2', txt: 'give me a wine recommendation' } ],
     }, (err) => {
         if(err) u.showErr(err)
     })
@@ -50,7 +50,7 @@ function startMicroservice() {
      * prevent conflicting with other services).
      */
     const calcSvc = new cote.Responder({
-        name: 'Everlife Wine Recommendation Service Demo',
+        name: 'Everlife Wine Recommendation Service Demo (2)',
         key: msKey,
     })
 
@@ -73,7 +73,7 @@ function startMicroservice() {
         } else {
             let msg = req.msg
             if(!msg) return cb()
-            if(msg.startsWith('/what_wine')) {
+            if(msg.startsWith('/what_wine2')) {
                 askedForService = true
                 cb(null, true)
                 sendReply("What food would you be eating with the wine?", req)
@@ -100,7 +100,6 @@ function findWine(food, cb) {
         url: "https://api.spoonacular.com/food/wine/pairing?apiKey="+key,
         qs: { food: food },
         headers: {
-            
             "Accept": "application/json",
         },
     }
